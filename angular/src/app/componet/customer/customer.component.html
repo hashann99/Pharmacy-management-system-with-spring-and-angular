@@ -1,0 +1,56 @@
+<div class="add-customer">
+  <div class="left" >
+    <input class="form-control form-control-sm" type="text" placeholder="First Name" [(ngModel)]="customer.firstName">
+    <input class="form-control form-control-sm" type="text" placeholder="Last Name" [(ngModel)]="customer.lastName">
+    <input class="form-control form-control-sm" type="text" placeholder="Address" [(ngModel)]="customer.address">
+    <input class="form-control form-control-sm" type="text" placeholder="Email" [(ngModel)]="customer.email">
+    <input class="form-control form-control-sm" type="text" placeholder="Number" [(ngModel)]="customer.mobile">
+    <input class="form-control form-control-sm" type="text" placeholder="User Name" [(ngModel)]="customer.userName">
+    <input class="form-control form-control-sm" type="text" placeholder="Password" [(ngModel)]="customer.password">
+    <section>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <button type="button" class="btn btn-outline-secondary" (click)="updateCustomer()">Update</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="addCustomer()">Save</button>
+      </div>
+    </section>
+  </div>
+  <div class="right">
+  </div>
+</div>
+<div class="table">
+  <section class="section-1">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Enter CustomerDto Name" aria-label="Recipient's username" aria-describedby="button-addon2" [(ngModel)]="filterText">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="searchByCustomerName()"><i class="bi bi-search"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+
+  <table class="table">
+    <th>#</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Address</th>
+    <th>Email</th>
+    <th>Mobile</th>
+    <th>User Name</th>
+    <th>Edit</th>
+    <th>Delete</th>
+    <tr *ngFor="let obj of customerList | customerFilter: filterText">
+      <td>{{obj.customerId}}</td>
+      <td>{{obj.firstName}}</td>
+      <td>{{obj.lastName}}</td>
+      <td>{{obj.address}}</td>
+      <td>{{obj.email}}</td>
+      <td>{{obj.mobile}}</td>
+      <td>{{obj.userName}}</td>
+      <td style="cursor: pointer" (click)="editCustomer(obj)"><i class="bi bi-pencil-square"></i></td>
+      <td style="cursor: pointer" (click)="deleteCustomer(obj.customerId)"><i class="bi bi-eraser-fill"></i></td>
+    </tr>
+  </table>
+
+  </section>
+</div>
