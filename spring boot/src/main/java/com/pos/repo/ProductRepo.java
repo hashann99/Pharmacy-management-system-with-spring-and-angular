@@ -10,4 +10,6 @@ public interface ProductRepo extends JpaRepository<Product,Integer> {
 
     @Query(value = "SELECT * FROM PRODUCT WHERE PRODUCT_NAME=?1",nativeQuery = true)
     Product searchProduct(String productName);
+
+
 }

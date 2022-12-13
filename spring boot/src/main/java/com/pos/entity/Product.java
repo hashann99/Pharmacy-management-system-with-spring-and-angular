@@ -30,14 +30,7 @@ public class Product {
     private Double a_price;
     private Double price;
     private Double profit;
-    @ManyToOne(
-            cascade = CascadeType.ALL
-    )
-    @JoinColumn(
-            name = "supplier_id",
-            referencedColumnName = "supplier_id"
-    )
-    private Supplier supplier;
+    private Integer supplier_id;
     private Integer onHand_qty;
     private Integer qty;
     private Integer qty_sold;

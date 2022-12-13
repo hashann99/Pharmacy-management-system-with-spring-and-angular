@@ -15,4 +15,6 @@ public interface ProductService {
     ResponseEntity<ProductDto> searchProduct(String productName);
 
     ResponseEntity<List<ProductDto>> getAllProduct();
+
+    List<Object> selectProductWithSupplier(Integer productId);
 }

@@ -6,21 +6,28 @@ import com.pos.entity.Product;
 import com.pos.entity.Supplier;
 import com.pos.exception.NotFoundException;
 import com.pos.repo.ProductRepo;
+import com.pos.repo.SupplierRepo;
 import com.pos.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepo productRepo;
+
+    @Autowired
+    private SupplierRepo supplierRepo;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -31,8 +38,6 @@ public class ProductServiceImpl implements ProductService {
             throw new NullPointerException("Product name should not empty!");
         try{
             Product product = modelMapper.map(productDto, Product.class);
-            System.out.println(product.getSupplier().toString());
-
             Product pro = productRepo.save(product);
             if(pro.getProduct_id() !=null){
                 return new ResponseEntity<Boolean>(true,HttpStatus.OK);
@@ -102,4 +107,24 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Product Not Found");
         }
     }
+
+
+    @Transactional
+    @Override
+    public List<Object> selectProductWithSupplier(Integer productId) {
+        List<Object>list=new ArrayList<>();
+        Optional<Product> product = productRepo.findById(productId);
+        if (product.isPresent()){
+            Integer supplierId = product.map(Product::getSupplier_id).get();
+            Optional<Supplier> supplier = supplierRepo.findById(supplierId);
+            if(supplier.isPresent()) {
+                String name = supplier.map(obj -> obj.getSupplier_name()).get();
+            }
+        }
+        list.add(new Product());
+        return list;
+
+    }
+
+
 }

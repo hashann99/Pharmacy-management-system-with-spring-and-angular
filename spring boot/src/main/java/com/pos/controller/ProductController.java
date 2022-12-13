@@ -43,4 +43,10 @@ public class ProductController {
         return productService.getAllProduct();
     }
 
+
+    @GetMapping("/getProduct/{id}")
+    public void selectProductWithSupplier(@PathVariable Integer id){
+        productService.selectProductWithSupplier(id);
+    }
+
 }
